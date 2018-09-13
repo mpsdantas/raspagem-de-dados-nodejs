@@ -1,0 +1,24 @@
+{
+  "name": "raspagem-de-dados-nodejs",
+  "version": "1.0.0",
+  "description": "Raspagem de dados com NodeJs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mpsdantas/raspagem-de-dados-nodejs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mpsdantas/raspagem-de-dados-nodejs/issues"
+  },
+  "homepage": "https://github.com/mpsdantas/raspagem-de-dados-nodejs#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.3",
+    "request": "^2.88.0"
+  }
+}
