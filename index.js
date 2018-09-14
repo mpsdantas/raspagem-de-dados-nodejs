@@ -81,7 +81,7 @@ const getUlr = (url) => {
 
 app.get('/raspagem', async (req, res) => {
 
-    let url = 'https://rachacuca.com.br/quiz/celebridades/';
+    let url = 'https://rachacuca.com.br/quiz/tv/';
     let base = 'https://rachacuca.com.br';
 
     let $ = await getUlr(url);
@@ -100,9 +100,10 @@ app.get('/raspagem', async (req, res) => {
         let $ = await getUlr(linksPastas[i].url);
         resultados.push(...getLinks($, base));
     }
-    console.log(resultados.length);
-    res.status(200).json(resultados);
-    
+
+    fs.writeFile(`${titulo}.json`, JSON.stringify(resultados, null, 4), function(err) {
+        res.status(200).json(resultados);
+    })
     
 });
 
