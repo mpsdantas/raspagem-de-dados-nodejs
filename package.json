@@ -19,6 +19,12 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.3",
+    "form-scraper": "0.0.4",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "curl": "^0.1.4",
+    "jquery": "^3.3.1",
+    "jsdom": "^12.0.0"
   }
 }
