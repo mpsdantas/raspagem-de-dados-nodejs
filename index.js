@@ -2,7 +2,8 @@ const express = require('express');
 const fs = require('fs');
 const request = require('request');
 const cheerio = require('cheerio');
-
+const FormData = require('form-data');
+const axios = require('axios');
 app = express();
 
 const verificarPastas = ($, base) => {
@@ -175,9 +176,12 @@ app.get('/raspagem-2', async (req, res) => {
         questoes.push(novaQuestao);
         obterQuestoes(novaQuestao.alternativas)
     });
-    
-
-
+    let arrayForm = $('#form-solve').serializeArray();
+    console.log(arrayForm)
+    let form = new FormData();
+    for (let i = 0; i < arrayForm.length; i++) {
+        form.append(arrayForm[i].name, arrayForm[i].value);
+    }
 });
 
 app.listen('8081')

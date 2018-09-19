@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/mpsdantas/raspagem-de-dados-nodejs#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.3",
+    "form-data": "^2.3.2",
     "form-scraper": "0.0.4",
     "request": "^2.88.0"
   },
