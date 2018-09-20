@@ -178,10 +178,6 @@ app.get('/raspagem-2', async (req, res) => {
     });
     let arrayForm = $('#form-solve').serializeArray();
     console.log(arrayForm)
-    let form = new FormData();
-    for (let i = 0; i < arrayForm.length; i++) {
-        form.append(arrayForm[i].name, arrayForm[i].value);
-    }
 });
 
 app.listen('8081')

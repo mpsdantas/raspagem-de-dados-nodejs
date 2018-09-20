@@ -22,6 +22,7 @@
     "express": "^4.16.3",
     "form-data": "^2.3.2",
     "form-scraper": "0.0.4",
+    "python-shell": "^1.0.4",
     "request": "^2.88.0"
   },
   "devDependencies": {

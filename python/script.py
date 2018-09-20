@@ -19,9 +19,12 @@ def getData(site):
     form = browser.find_elements_by_id("form-solve") 
     form[0].submit()
 
-    time.sleep(5)
+    time.sleep(1)
     
-    print(str(browser.page_source))
+    dataPage = browser.page_source 
+    browser.close()
+    print(str(dataPage))
+
 
 getData(url)
 
