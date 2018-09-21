@@ -81,11 +81,14 @@ const pythonScript = async (url) =>{
     };
     return new Promise((resolve, reject) => {
         PythonShell.run('script.py', options, function (err, results) {
-            if (err) throw err;
-            // results is an array consisting of messages collected during execution
-            let data = "";
-            for(let i =0; i<results.length; i++) data = `${data}${results[i]}`;
-            resolve(data);
+            if(err) {
+                resolve("Erro")
+            } else{
+                let data = "";
+                for(let i =0; i<results.length; i++) data = `${data}${results[i]}`;
+                resolve(data);
+            }
+            
             
         });
     }); 
@@ -94,36 +97,44 @@ const pythonScript = async (url) =>{
 const mainFunc = async () =>{
     let arrayArquivos = await lerArquivo();
     let index = parseInt(fs.readFileSync("./index.txt"));
-    for(let i = 145; i<arrayArquivos.length; i++){
+    for(let i = index; i<arrayArquivos.length; i++){
         
         let questoes = JSON.parse(fs.readFileSync("./questoes.json"));
 
         let questoesUrl = await scraping(arrayArquivos[i].url);
         
         let data = await pythonScript(arrayArquivos[i].url);
-        let $ = cheerio.load(data);
-        let categoria = $('#breadcrumb').find('li>a').text();
-        categoria = categoria.replace('Racha CucaQuiz','');
+
+        if(data!=="Erro"){
+            let $ = cheerio.load(data);
+            let categoria = $('#breadcrumb').find('li>a').text();
+            categoria = categoria.replace('Racha CucaQuiz','');
+            
+            let contador = 0;
+            $('ol>li').each(function (i) {
+                questoesUrl[contador].corretaTexto = $(this).find('.resposta-correta').text();
+                questoesUrl[contador].categoria = categoria;
+
+                contador++;
+            });
+
+            questoes.push(...questoesUrl);
+
+            let salvarQuestoes = JSON.stringify(questoes);
+
+            fs.writeFileSync('index.txt', `${i}`, 'utf8');
+
+            fs.writeFileSync('questoes.json', salvarQuestoes, 'utf8');
+
+            fs.writeFileSync('informacoes.txt', `Indice do for: ${i}\nQuantidade de questões: ${questoes.length}`, 'utf8');
+
+            let porcentagem = 100 - (parseInt(arrayArquivos.length-i)/parseInt(arrayArquivos.length)) * 100;
+
+            console.log(`${questoes.length} questões salvas. Faltam ${arrayArquivos.length-i} links. ${porcentagem}% Concluído`);
+        }else{
+            i = i - 1;
+        }
         
-        let contador = 0;
-        $('ol>li').each(function (i) {
-            questoesUrl[contador].corretaTexto = $(this).find('.resposta-correta').text();
-            questoesUrl[contador].categoria = categoria;
-
-            contador++;
-        });
-
-        questoes.push(...questoesUrl);
-
-        let salvarQuestoes = JSON.stringify(questoes);
-
-        fs.writeFileSync('index.txt', `${i}`, 'utf8');
-
-        fs.writeFileSync('questoes.json', salvarQuestoes, 'utf8');
-
-        fs.writeFileSync('informacoes.txt', `Indice do for: ${i}\nQuantidade de questões: ${questoes.length}`, 'utf8');
-
-        console.log(`${questoes.length} questões salvas.`);
         
     }
     return true;
